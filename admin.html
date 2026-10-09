@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Nilus Restaurant | Manager Dashboard</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<div class="admin-shell">
+  <header class="admin-topbar">
+    <div><span class="brand-mark">N</span><strong>NILUS MANAGER</strong></div>
+    <div class="top-actions"><a href="index.html" target="_blank">View Menu</a><button id="logoutBtn" hidden>Log out</button></div>
+  </header>
+
+  <main class="admin-main">
+    <section id="loginPanel" class="panel login-panel">
+      <span class="eyebrow">MANAGER ACCESS</span>
+      <h1>Sign in to manage the menu</h1>
+      <p>Managers can create categories, add food, change prices, edit descriptions and control availability.</p>
+      <form id="loginForm">
+        <label>Email<input id="email" type="email" required autocomplete="email"></label>
+        <label>Password<input id="password" type="password" required autocomplete="current-password"></label>
+        <button class="primary" type="submit">Sign in</button>
+      </form>
+      <p id="loginMessage" class="message"></p>
+    </section>
+
+    <section id="dashboard" hidden>
+      <div class="dashboard-heading">
+        <div><span class="eyebrow">MENU CONTROL</span><h1>Manage Nilus menu</h1><p>Add categories and the food items inside them without editing website code.</p></div>
+        <button id="newCategoryBtn" class="primary">+ New Category</button>
+      </div>
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card"><span>Categories</span><strong id="categoryCount">0</strong></div>
+        <div class="stat-card"><span>Food items</span><strong id="itemCount">0</strong></div>
+        <div class="stat-card"><span>Available</span><strong id="availableCount">0</strong></div>
+        <div class="stat-card"><span>Hidden</span><strong id="hiddenCount">0</strong></div>
+      </div>
+      <div class="toolbar">
+        <input id="menuSearch" type="search" placeholder="Search categories or food..." autocomplete="off">
+        <button id="refreshBtn" class="secondary">↻ Refresh</button>
+      </div>
+      <p id="dashboardMessage" class="message"></p>
+      <div id="categoryList" class="category-list"></div>
+    </section>
+  </main>
+</div>
+
+<div id="categoryModal" class="modal" hidden>
+  <div class="modal-card">
+    <button class="close" data-close="categoryModal">×</button>
+    <span class="eyebrow">CATEGORY</span><h2 id="categoryModalTitle">New Category</h2>
+    <form id="categoryForm">
+      <input type="hidden" id="categoryId">
+      <label>Name<input id="categoryName" required placeholder="e.g. Desserts"></label>
+      <label>Description<textarea id="categoryDescription" rows="3" placeholder="Short description shown to customers"></textarea></label>
+      <label>Category image <span class="hint">JPG, PNG, WEBP — max 5 MB</span><input id="categoryImageFile" type="file" accept="image/*"></label>
+      <img id="categoryCurrentImage" class="image-preview current-preview" alt="Current category image" hidden>
+      <img id="categoryImagePreview" class="image-preview" alt="Category preview" hidden>
+      <label>Display order<input id="categoryOrder" type="number" value="1" min="0"></label>
+      <label class="check"><input id="categoryActive" type="checkbox" checked> Active</label>
+      <div class="form-actions"><button type="button" class="secondary" data-close="categoryModal">Cancel</button><button class="primary" type="submit">Save Category</button></div>
+    </form>
+  </div>
+</div>
+
+<div id="itemModal" class="modal" hidden>
+  <div class="modal-card">
+    <button class="close" data-close="itemModal">×</button>
+    <span class="eyebrow">FOOD ITEM</span><h2 id="itemModalTitle">New Food Item</h2>
+    <form id="itemForm">
+      <input type="hidden" id="itemId"><input type="hidden" id="itemCategoryId">
+      <label>Food name<input id="itemName" required placeholder="e.g. Chicken Burger"></label>
+      <label>Description<textarea id="itemDescription" rows="3" placeholder="Describe the food"></textarea></label>
+      <label>Price (ETB)<input id="itemPrice" type="number" required min="0" step="0.01" placeholder="350"></label>
+      <label>Food image <span class="hint">JPG, PNG, WEBP — max 5 MB</span><input id="itemImageFile" type="file" accept="image/*"></label>
+      <img id="itemCurrentImage" class="image-preview current-preview" alt="Current food image" hidden>
+      <img id="itemImagePreview" class="image-preview" alt="Food preview" hidden>
+      <label>Display order<input id="itemOrder" type="number" value="1" min="0"></label>
+      <label class="check"><input id="itemAvailable" type="checkbox" checked> Available to customers</label>
+      <div class="form-actions"><button type="button" class="secondary" data-close="itemModal">Cancel</button><button class="primary" type="submit">Save Food Item</button></div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="supabase-client.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
